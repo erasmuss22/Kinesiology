@@ -90,6 +90,7 @@ Activity *currentActivity;
 	
 	_activitiesList.text = @"";
 	_playButton.hidden = TRUE;
+    _answerButton.hidden = TRUE;
 	previousActivities = [NSMutableArray new];
 	recentActivities = [NSMutableArray new];
 	previousListTitles = [NSMutableArray new];
@@ -218,6 +219,7 @@ Activity *currentActivity;
 	}
 	
 	currentActivity = activity;
+    _answerButton.hidden = currentActivity.answer == nil;
 }
 
 //Displays the previous activity when button is pressed
@@ -249,8 +251,10 @@ Activity *currentActivity;
 }
 
 - (IBAction)showAnswer:(UIButton *)sender {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Answer" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-    alert.message = @"Hello!";
-    [alert show];
+            if (currentActivity.answer != nil){
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Answer" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+                alert.message = currentActivity.answer;
+                [alert show];
+            }
 }
 @end

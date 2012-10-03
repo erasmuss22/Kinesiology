@@ -69,8 +69,8 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	activitiesListPath = [documentsDirectory stringByAppendingString:@"/activitiesLists"];
 	domainTitlesPath = [documentsDirectory stringByAppendingString:@"/domainTitles"];
 
-    sourcePath = [NSURL URLWithString:@"http://dl.dropbox.com/u/89854530/"];
-    
+    //sourcePath = [NSURL URLWithString:@"http://dl.dropbox.com/u/89854530/"];
+    sourcePath = [NSURL URLWithString:@"https://mywebspace.wisc.edu/ejrasmussen2/web/activities.xml"];
     //Try to load the activities list from the external XML file, otherwise read saved data
     if (![self refreshActivities]) {
         activitiesLists = [NSKeyedUnarchiver unarchiveObjectWithFile:activitiesListPath];
@@ -180,14 +180,20 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if(buttonIndex==0){
-        NSLog(@"%d",buttonIndex);
-        
-    }
-    else{
+    if(buttonIndex==1){
         NSString *URL = [alertView textFieldAtIndex:0].text;
         if ([URL length] > 0){
+            NSURL *tempPath = sourcePath;
             sourcePath = [NSURL URLWithString:URL];
+            if ([self refreshActivities]) {
+                _selectInstructions.text = @"Activities refreshed!  Choose a level and domain:";
+            } else {
+                _selectInstructions.text = @"Activities couldn't be refreshed.";
+                sourcePath = tempPath;
+                [self refreshActivities];
+            }
+            
+            _selectInstructions.hidden = NO;
         }
     }   
     
@@ -278,8 +284,8 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 - (BOOL)refreshActivities
 {
 	[_refreshingIndicator startAnimating];
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[sourcePath URLByAppendingPathComponent:@"activities.xml"]];
-	
+	//NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[sourcePath URLByAppendingPathComponent:@"activities.xml"]];
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[sourcePath URLByAppendingPathComponent:@""]];
 	//If statements should make it so that it only refreshes if it successfully connects to and parses an XML document
 	if (parser != nil) {
 		[parser setDelegate:self];
@@ -329,10 +335,12 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 - (IBAction)refresh:(UIBarButtonItem *)sender {
 	if ([self refreshActivities]) {
 		_selectInstructions.text = @"Activities refreshed!  Choose a level and domain:";
+        _detailViewController.description.text = @"To get started, choose both a level and and domain of study on the left.";
+        _detailViewController.activitiesList.text = @"";
 	} else {
 		_selectInstructions.text = @"Activities couldn't be refreshed.";
 	}
-	
+	 
 	_selectInstructions.hidden = NO;
 }
 
@@ -442,6 +450,8 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 		currentActivity.videoURL = [NSURL URLWithString:currentString relativeToURL:sourcePath];
 		currentActivity.video = [[MPMoviePlayerController alloc] initWithContentURL:currentActivity.videoURL];
 		[currentActivity.video prepareToPlay];
+	} else if ([elementName isEqualToString:@"answer"]) {
+            currentActivity.answer = currentString;
 	}
 }
 
