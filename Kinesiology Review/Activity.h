@@ -13,6 +13,8 @@
 	NSString *description;
     NSString *answer;
 	NSURL *videoURL;
+    NSURL *imageURL;
+    NSData *imageData;
 	MPMoviePlayerController *video;
 }
 
@@ -20,5 +22,8 @@
 @property (strong) NSURL *videoURL;
 @property (strong) MPMoviePlayerController *video;
 @property (strong) NSString *answer;
+@property (strong) NSURL *imageURL;
+@property (strong) NSData *imageData;
+
 
 @end

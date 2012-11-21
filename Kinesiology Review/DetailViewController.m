@@ -30,6 +30,7 @@
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize selectedActivities = _selectedActivities;
 @synthesize selectedListTitle = _selectedListTitle;
+@synthesize imageView = _imageView;
 
 
 
@@ -93,6 +94,7 @@ Activity *currentActivity;
 	_activitiesList.text = @"";
 	_playButton.hidden = TRUE;
     _answerButton.hidden = TRUE;
+    _imageView.hidden = TRUE;
 	previousActivities = [NSMutableArray new];
 	recentActivities = [NSMutableArray new];
 	previousListTitles = [NSMutableArray new];
@@ -193,6 +195,7 @@ Activity *currentActivity;
 	_activitiesList.text = [previousListTitles lastObject];
 	_description.text = activity.description;
 	_playButton.hidden = activity.videoURL == nil;
+    _imageView.hidden = activity.imageURL == nil;
 	
 	//Add activity to end of list of recent activities (first removing it from earlier in the list
 	[recentActivities removeObject:activity];
@@ -222,6 +225,9 @@ Activity *currentActivity;
 	
 	currentActivity = activity;
     _answerButton.hidden = currentActivity.answer == nil;
+    if (activity.imageURL != nil){
+        _imageView.image = [UIImage imageWithData: currentActivity.imageData];
+    }
 }
 
 //Displays the previous activity when button is pressed

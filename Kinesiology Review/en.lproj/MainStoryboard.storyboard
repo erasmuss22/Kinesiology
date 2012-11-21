@@ -107,6 +107,10 @@
                                             <action selector="showAnswer:" destination="4" eventType="touchUpInside" id="tDz-h5-yhW"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ztW-8v-9L3">
+                                        <rect key="frame" x="156" y="260" width="352" height="299"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -121,6 +125,7 @@
                         <outlet property="answerButton" destination="SCI-tT-9Pz" id="HLd-4l-mBy"/>
                         <outlet property="currentCard" destination="473-cY-QVo" id="zVV-02-RgZ"/>
                         <outlet property="description" destination="NWB-qE-vhq" id="spL-7l-LOc"/>
+                        <outlet property="imageView" destination="ztW-8v-9L3" id="OCK-wC-q0e"/>
                         <outlet property="largeView" destination="26" id="EtB-rn-ND6"/>
                         <outlet property="nextButton" destination="akg-yF-Bjw" id="5dh-x9-jPp"/>
                         <outlet property="playButton" destination="t4S-LP-uvH" id="D72-7t-Ikr"/>
@@ -249,6 +254,7 @@
                 <relationship kind="outlet" name="currentCard" candidateClass="UIView"/>
                 <relationship kind="outlet" name="description" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="detailDescriptionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="largeView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>

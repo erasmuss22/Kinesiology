@@ -51,6 +51,8 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *answerButton; //Button to get answer
 
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+
 - (IBAction)playVideo:(UIButton *)sender;	//Plays video when button is pushed
 
 - (IBAction)showAnswer:(UIButton *)sender; //Displays alert with answer
