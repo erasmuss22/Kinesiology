@@ -19,6 +19,8 @@
 @synthesize nextButton = _nextButton;
 @synthesize previousButton = _previousButton;
 @synthesize answerButton = _answerButton;
+@synthesize setTitle = _setTitle;
+@synthesize workingTitle = _workingTitle;
 
 @synthesize detailItem = _detailItem;
 @synthesize detailDescriptionLabel = _detailDescriptionLabel;

@@ -19,6 +19,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *insertURL; //insert the URL
 
+
 - (IBAction)refresh:(UIBarButtonItem *)sender;	//Refresh button
 
 - (IBAction)insertURL:(UIBarButtonItem *)sender; //inserts URL

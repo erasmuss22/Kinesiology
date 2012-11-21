@@ -40,10 +40,19 @@
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" text="To get started, choose both a level and and domain of study on the left." id="NWB-qE-vhq">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" editable="NO" id="NWB-qE-vhq">
                                         <rect key="frame" x="61" y="172" width="543" height="380"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <string key="text">To get started, enter the URL of an XML file formatted to store study questions by pressing the URL button in the left upper corner. The file should have a format such as :         &lt;activities>
+   &lt;title>Set Title&lt;/title>
+   &lt;activity>
+      &lt;domain>Question Domain&lt;/domain>
+      &lt;level>#&lt;/level>
+      &lt;description>Question...?&lt;/description>
+      &lt;answer>Answer...&lt;/answer>
+   &lt;/activity>
+&lt;/activities></string>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
@@ -116,6 +125,7 @@
                         <outlet property="nextButton" destination="akg-yF-Bjw" id="5dh-x9-jPp"/>
                         <outlet property="playButton" destination="t4S-LP-uvH" id="D72-7t-Ikr"/>
                         <outlet property="previousButton" destination="4wm-dA-BbT" id="6Fk-yh-mcv"/>
+                        <outlet property="workingTitle" destination="53" id="Ghw-O6-1Ww"/>
                     </connections>
                 </viewController>
             </objects>
@@ -243,6 +253,7 @@
                 <relationship kind="outlet" name="nextButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="playButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="previousButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="workingTitle" candidateClass="UINavigationItem"/>
             </relationships>
         </class>
         <class className="MasterViewController" superclassName="UITableViewController">

@@ -29,7 +29,7 @@ NSMutableArray *activitiesLists;	//Array of arrays of activities (first dimensio
 NSMutableArray *domainTitles;	//Names of each domain
 NSInteger level = -1, domain = -1;	//Indexes of selections in each section
 NSInteger const levels = 0;	//Just for better readability below
-
+bool first = true;
 UITableView *theTableView;	//The table view.  Stored here so after refreshing, cells can be cleared.
 
 //The paths where the files for activities lists and domain titles will be stored
@@ -70,7 +70,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	domainTitlesPath = [documentsDirectory stringByAppendingString:@"/domainTitles"];
 
     //sourcePath = [NSURL URLWithString:@"http://dl.dropbox.com/u/89854530/"];
-    sourcePath = [NSURL URLWithString:@"https://mywebspace.wisc.edu/ejrasmussen2/web/activities.xml"];
+    //sourcePath = [NSURL URLWithString:@"https://mywebspace.wisc.edu/ejrasmussen2/web/activities.xml"];
     //Try to load the activities list from the external XML file, otherwise read saved data
     if (![self refreshActivities]) {
         activitiesLists = [NSKeyedUnarchiver unarchiveObjectWithFile:activitiesListPath];
@@ -78,9 +78,10 @@ NSMutableArray *currentActivityLevels, *currentDomains;
     }
 	
 	if (activitiesLists == nil || domainTitles == nil) {
-		UIAlertView *alert = [[UIAlertView new] initWithTitle:@"Error" message:@"The XML file posted online couldn't be read." delegate:nil cancelButtonTitle:@"Try again" otherButtonTitles:nil];
-		[alert show];
-		_selectInstructions.text = @"Activities couldn't be loaded.";
+		//UIAlertView *alert = [[UIAlertView new] initWithTitle:@"Error" message:@"The XML file posted online couldn't be read." delegate:nil cancelButtonTitle:@"Try again" otherButtonTitles:nil];
+		//[alert show];
+		//_selectInstructions.text = @"Activities couldn't be loaded.";
+            
 	}
 	else {
 		_selectInstructions.text = @"Choose a level and domain:";
@@ -187,6 +188,8 @@ NSMutableArray *currentActivityLevels, *currentDomains;
             sourcePath = [NSURL URLWithString:URL];
             if ([self refreshActivities]) {
                 _selectInstructions.text = @"Activities refreshed!  Choose a level and domain:";
+                _detailViewController.description.text = @"To get started, choose both a level and and domain of study on the left.";
+                _detailViewController.activitiesList.text = @"";
             } else {
                 _selectInstructions.text = @"Activities couldn't be refreshed.";
                 sourcePath = tempPath;
@@ -452,6 +455,9 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 		[currentActivity.video prepareToPlay];
 	} else if ([elementName isEqualToString:@"answer"]) {
             currentActivity.answer = currentString;
+	} else if ([elementName isEqualToString:@"title"]) {
+        self.detailViewController.setTitle = currentString;
+        self.detailViewController.workingTitle.title = currentString;
 	}
 }
 

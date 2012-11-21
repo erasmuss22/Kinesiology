@@ -23,6 +23,8 @@
 
 @property (strong) NSString *selectedListTitle;	//Holds the title of the selected list of activities
 
+@property (strong) NSString *setTitle;	//Holds the title of the selected list of activities
+
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *nextButton;	//The next button
 
 - (IBAction)nextActivity:(UIBarButtonItem *)sender;	//Called when user pushes "Next!" button
@@ -40,6 +42,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *activitiesList;	//Displays which list the current activity is from
 
 @property (strong, nonatomic) IBOutlet UITextView *description;	//Displays the description of the current activity
+
+@property (strong, nonatomic) IBOutlet UINavigationItem *workingTitle;	//Displays the description of the current activity
 
 - (void)displayActivity:(Activity *)activity;	//Displays activity
 
