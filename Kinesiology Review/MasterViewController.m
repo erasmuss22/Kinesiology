@@ -458,7 +458,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	} else if ([elementName isEqualToString:@"title"]) {
         self.detailViewController.setTitle = currentString;
         self.detailViewController.workingTitle.title = currentString;
-	} else if ([elementName isEqualToString:@"image"]) {
+	} else if ([elementName isEqualToString:@"picture"]) {
 		currentActivity.imageURL = [NSURL URLWithString:currentString relativeToURL:sourcePath];
         currentActivity.imageData = [[NSData alloc] initWithContentsOfURL:currentActivity.imageURL];
 	}
