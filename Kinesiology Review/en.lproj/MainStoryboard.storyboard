@@ -119,7 +119,7 @@
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Kinesiology Review Activities" id="53" colorLabel="IBBuiltInLabel-Red"/>
+                    <navigationItem key="navigationItem" title="Quiz Time" id="53" colorLabel="IBBuiltInLabel-Red"/>
                     <connections>
                         <outlet property="activitiesList" destination="RfK-3s-al7" id="wOi-Jx-cDb"/>
                         <outlet property="answerButton" destination="SCI-tT-9Pz" id="HLd-4l-mBy"/>
