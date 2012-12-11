@@ -57,4 +57,9 @@
 
 - (IBAction)showAnswer:(UIButton *)sender; //Displays alert with answer
 
+- (IBAction)showAbout:(UIButton *) sender;
+
+@property (strong, nonatomic) IBOutlet UIButton *aboutButton;
+
+
 @end

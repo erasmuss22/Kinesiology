@@ -21,6 +21,7 @@
 @synthesize answerButton = _answerButton;
 @synthesize setTitle = _setTitle;
 @synthesize workingTitle = _workingTitle;
+@synthesize aboutButton = _aboutButton;
 
 @synthesize detailItem = _detailItem;
 @synthesize detailDescriptionLabel = _detailDescriptionLabel;
@@ -98,7 +99,9 @@ Activity *currentActivity;
 	previousActivities = [NSMutableArray new];
 	recentActivities = [NSMutableArray new];
 	previousListTitles = [NSMutableArray new];
-	
+    UIBarButtonItem *rbi = [[UIBarButtonItem alloc]initWithTitle:@"About" style:UIBarButtonItemStyleBordered target:self action:@selector(showAbout:)];
+    _workingTitle.rightBarButtonItem = rbi;
+    _workingTitle.rightBarButtonItem.tintColor = [UIColor blackColor];
 	[self configureView];
 }
 
@@ -136,6 +139,15 @@ Activity *currentActivity;
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:NO];
     self.masterPopoverController = nil;
+}
+
+
+- (IBAction)showAbout:(UIButton *)sender
+{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
+        alert.message = @"This is Quiz Time";
+    [alert show];
+    
 }
 
 //When user hits "Next!" button, load and display the next activity
