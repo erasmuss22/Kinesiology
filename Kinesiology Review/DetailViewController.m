@@ -144,9 +144,16 @@ Activity *currentActivity;
 
 - (IBAction)showAbout:(UIButton *)sender
 {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: nil];
-        alert.message = @"This is Quiz Time";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"About" message:nil delegate:self cancelButtonTitle:@"Okay" otherButtonTitles: @"Details", nil];
+    alert.message = @"This app was developed in collaboration with students in CS, UW-Madison. More details about the development team and additional resources and help with using this app is available by clicking 'Details' below (redirect to Safari)";
     [alert show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(buttonIndex==1){
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.cs.wisc.edu/wings/projects/quiztime"]];
+    }   
     
 }
 
