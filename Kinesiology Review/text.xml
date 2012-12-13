@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<activities>
+	<title>Example File</title>
+	<activity>
+		<domain>Example Format</domain>
+		<level>1</level>
+		<description>Questions are displayed here. Click 'Another Activity' to display the next question.</description>
+	</activity>
+	<activity>
+		<domain>Example Format</domain>
+		<level>1</level>
+		<description>In the xml file, users can optionally have answers available. Click the 'Answer' button below</description>
+		<answer>Answers will be displayed in an alert like this</answer>
+	</activity>
+	<activity>
+		<domain>Example Format</domain>
+		<level>1</level>
+		<description>Questions can be grouped into different domains and levels. Change the level to 2</description>
+	</activity>
+	<activity>
+		<domain>Example Format</domain>
+		<level>2</level>
+		<description>Now that you know how to navigate, enter your own xml file by clicking URL above</description>
+	</activity>
+</activities>

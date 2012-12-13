@@ -288,7 +288,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 {
 	[_refreshingIndicator startAnimating];
 	//NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[sourcePath URLByAppendingPathComponent:@"activities.xml"]];
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:[sourcePath URLByAppendingPathComponent:@""]];
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithContentsOfURL:sourcePath];
 	//If statements should make it so that it only refreshes if it successfully connects to and parses an XML document
 	if (parser != nil) {
 		[parser setDelegate:self];
