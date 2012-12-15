@@ -70,7 +70,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	domainTitlesPath = [documentsDirectory stringByAppendingString:@"/domainTitles"];
 
     //sourcePath = [NSURL URLWithString:@"http://dl.dropbox.com/u/89854530/"];
-    //sourcePath = [NSURL URLWithString:@"https://mywebspace.wisc.edu/ejrasmussen2/web/activities.xml"];
+    sourcePath = [NSURL URLWithString:@"http://research.cs.wisc.edu/wings/projects/quiztime/test.xml"];
     //Try to load the activities list from the external XML file, otherwise read saved data
     if (![self refreshActivities]) {
         activitiesLists = [NSKeyedUnarchiver unarchiveObjectWithFile:activitiesListPath];
