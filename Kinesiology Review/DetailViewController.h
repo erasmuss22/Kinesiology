@@ -21,6 +21,8 @@
 
 @property (strong) NSMutableArray *selectedActivities;	//Holds the selected list of activities
 
+@property (strong) NSMutableArray *previousActivities;	//Holds the selected list of activities
+
 @property (strong) NSString *selectedListTitle;	//Holds the title of the selected list of activities
 
 @property (strong) NSString *setTitle;	//Holds the title of the selected list of activities

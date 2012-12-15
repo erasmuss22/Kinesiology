@@ -11,6 +11,8 @@
 
 #import "Activity.h"
 
+#import "AppDelegate.h"
+
 @interface MasterViewController () {
     NSMutableArray *_objects;
 }
@@ -68,13 +70,18 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	NSString *documentsDirectory = [paths objectAtIndex:0];
 	activitiesListPath = [documentsDirectory stringByAppendingString:@"/activitiesLists"];
 	domainTitlesPath = [documentsDirectory stringByAppendingString:@"/domainTitles"];
-
-    //sourcePath = [NSURL URLWithString:@"http://dl.dropbox.com/u/89854530/"];
-    sourcePath = [NSURL URLWithString:@"http://research.cs.wisc.edu/wings/projects/quiztime/test.xml"];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *URL = [prefs stringForKey:@"lastxml"];
+    if (URL != nil){
+        sourcePath = [NSURL URLWithString:URL];
+    } else {
+        sourcePath = [NSURL URLWithString:@"http://research.cs.wisc.edu/wings/projects/quiztime/test.xml"];
+    }
+        
     //Try to load the activities list from the external XML file, otherwise read saved data
     if (![self refreshActivities]) {
-        activitiesLists = [NSKeyedUnarchiver unarchiveObjectWithFile:activitiesListPath];
-	 	domainTitles = [NSKeyedUnarchiver unarchiveObjectWithFile:domainTitlesPath];
+        //activitiesLists = [NSKeyedUnarchiver unarchiveObjectWithFile:activitiesListPath];
+	 	//domainTitles = [NSKeyedUnarchiver unarchiveObjectWithFile:domainTitlesPath];
     }
 	
 	if (activitiesLists == nil || domainTitles == nil) {
@@ -190,10 +197,11 @@ NSMutableArray *currentActivityLevels, *currentDomains;
                 _selectInstructions.text = @"Activities refreshed!  Choose a level and domain:";
                 _detailViewController.description.text = @"To get started, choose both a level and and domain of study on the left.";
                 _detailViewController.activitiesList.text = @"";
+                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                [prefs setObject:URL forKey:@"lastxml"];
             } else {
                 _selectInstructions.text = @"Activities couldn't be refreshed.";
                 sourcePath = tempPath;
-                [self refreshActivities];
             }
             
             _selectInstructions.hidden = NO;
@@ -261,16 +269,19 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	}
 	
 	if (!noChange) {
-		
+		currentPos = 0;
 		//If both options have been set, update selected activities list
 		if (level != -1 && domain != -1) {
 			_selectInstructions.hidden = YES;
 			_detailViewController.selectedActivities = [[activitiesLists objectAtIndex:level] objectAtIndex:domain];
+            _detailViewController.previousActivities = [NSMutableArray new];
+            
 			_detailViewController.selectedListTitle = [NSString stringWithFormat:@"Level %d — %@", level + 1, [domainTitles objectAtIndex:domain]];
 			[_detailViewController nextActivity:nil];
 			[_detailViewController.nextButton setEnabled:YES];
+            
 		}
-		
+		[_detailViewController.previousButton setEnabled:NO];
 		[tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
 		
 		//And uncheck other options in the section
@@ -303,8 +314,11 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 				
 				[self.tableView reloadData];	//Refreshes list of levels and domains
 				_detailViewController.selectedActivities = nil;
+                _detailViewController.previousActivities = nil;
 				_detailViewController.selectedListTitle = nil;
+                currentPos = 0;
 				[_detailViewController.nextButton setEnabled:NO];
+                [_detailViewController.previousButton setEnabled:NO];
 				level = -1;
 				domain = -1;
 				[_refreshingIndicator stopAnimating];

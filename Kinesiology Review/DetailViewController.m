@@ -6,7 +6,7 @@
 //
 
 #import "DetailViewController.h"
-
+#import "AppDelegate.h"
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 - (void)configureView;
@@ -30,15 +30,16 @@
 @synthesize description = _description;
 @synthesize masterPopoverController = _masterPopoverController;
 @synthesize selectedActivities = _selectedActivities;
+@synthesize previousActivities;
 @synthesize selectedListTitle = _selectedListTitle;
 @synthesize imageView = _imageView;
 
 
 
+
 //LOCAL VARIABLES
 
-//List of previous activities, including current one
-NSMutableArray *previousActivities;
+
 
 //Holds previous list titles, including current one
 NSMutableArray *previousListTitles;
@@ -165,7 +166,7 @@ Activity *currentActivity;
 		leftCenter = CGPointMake(_largeView.bounds.origin.x - _currentCard.bounds.size.width, displayCenter.y);
 		rightCenter = CGPointMake(_largeView.bounds.origin.x + _largeView.bounds.size.width + _currentCard.bounds.size.width, displayCenter.y);
 	}
-	
+	NSLog(@"%d", currentPos);
 	if (_selectedActivities.count != 0) {
 		
 		//If only activity in the selected list is already showing, display an alert
@@ -181,15 +182,19 @@ Activity *currentActivity;
 				if (finished) {
 					
 					//The activity to be displayed
-					Activity *nextActivity = [_selectedActivities objectAtIndex:(arc4random() % _selectedActivities.count)];
-					
-					//Make sure next activity hasn't been displayed recently
-					while ([recentActivities containsObject:nextActivity] && _selectedActivities.count != 1) {
-						nextActivity = [_selectedActivities objectAtIndex:(arc4random() % _selectedActivities.count)];
-					}
-					
-					[previousActivities addObject:nextActivity];
-					[previousListTitles addObject:_selectedListTitle];
+					Activity *nextActivity = [_selectedActivities objectAtIndex:currentPos];
+                    NSLog(@"current %d", currentPos);
+                    if (currentPos == 0){
+                        _previousButton.enabled = NO;
+                    } else {
+                        _previousButton.enabled = YES;
+                    }
+                    currentPos++;
+                    if (currentPos == _selectedActivities.count){
+                        currentPos--;
+                        _nextButton.enabled = NO;
+                        _previousButton.enabled = YES;
+                    }
 					[self displayActivity:nextActivity];
 					
 					_currentCard.center = rightCenter;
@@ -211,36 +216,11 @@ Activity *currentActivity;
 //Displays the passed in activity
 - (void)displayActivity:(Activity *)activity
 {	
-	_activitiesList.text = [previousListTitles lastObject];
+	//_activitiesList.text = [_selectedActivities objectAtIndex:currentPos].title;
 	_description.text = activity.description;
 	_playButton.hidden = activity.videoURL == nil;
     _imageView.hidden = activity.imageURL == nil;
-	
-	//Add activity to end of list of recent activities (first removing it from earlier in the list
-	[recentActivities removeObject:activity];
-	[recentActivities addObject:activity];
-	
-	//Only show previous button if there are any previous activities
-	if (previousActivities.count < 2) {
-		[_previousButton setEnabled:NO];
-	} else {
-		[_previousButton setEnabled:YES];
-	}
-	
-	//The max number of recent items to keep track of (for avoiding repetition)
-	NSInteger maxRecentItems = 10;
-	
-	if (_selectedActivities.count * 3 / 4 > maxRecentItems) {
-		maxRecentItems = _selectedActivities.count * 3 / 4;
-	}
-	if (maxRecentItems >= _selectedActivities.count) {
-		maxRecentItems = _selectedActivities.count - 1;
-	}
-	
-	//Remove oldest activities from recent activities list if it's full
-	if (recentActivities.count > maxRecentItems) {
-		[recentActivities removeObjectAtIndex:0];
-	}
+
 	
 	currentActivity = activity;
     _answerButton.hidden = currentActivity.answer == nil;
@@ -251,14 +231,18 @@ Activity *currentActivity;
 
 //Displays the previous activity when button is pressed
 - (IBAction)backToPrevious:(UIBarButtonItem *)sender {
-	[previousActivities removeLastObject];
-	[previousListTitles removeLastObject];
-	
+    currentPos--;
+    if (currentPos <= 0){
+        currentPos = 0;
+        _previousButton.enabled = NO;
+        _nextButton.enabled = YES;
+    }
+    NSLog(@"%d", currentPos);
 	[UIView animateWithDuration:animationTime animations:^{
 		_currentCard.center = rightCenter;
 	} completion:^(BOOL finished){
 		if (finished) {
-			[self displayActivity:[previousActivities lastObject]];
+			[self displayActivity:[_selectedActivities objectAtIndex:currentPos]];
 			
 			_currentCard.center = leftCenter;
 			

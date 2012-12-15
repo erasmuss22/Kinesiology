@@ -11,4 +11,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+extern int currentPos;
+extern bool justadvanced;
 @end

@@ -10,7 +10,8 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
-
+int currentPos = 0;
+bool justadvanced = true;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
