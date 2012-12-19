@@ -123,7 +123,7 @@ Activity *currentActivity;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
 #pragma mark - Split view
@@ -166,13 +166,21 @@ Activity *currentActivity;
 		leftCenter = CGPointMake(_largeView.bounds.origin.x - _currentCard.bounds.size.width, displayCenter.y);
 		rightCenter = CGPointMake(_largeView.bounds.origin.x + _largeView.bounds.size.width + _currentCard.bounds.size.width, displayCenter.y);
 	}
-	NSLog(@"%d", currentPos);
 	if (_selectedActivities.count != 0) {
 		
 		//If only activity in the selected list is already showing, display an alert
-		if (_selectedActivities.count == 1 && [_selectedListTitle isEqualToString:[previousListTitles lastObject]]) {
-			UIAlertView *alert = [[UIAlertView new] initWithTitle:@"Dead end!" message:@"There's only one activity for this list and domain." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
+		if (_selectedActivities.count == 1) {
+			Activity *nextActivity = [_selectedActivities objectAtIndex:currentPos];
+            _nextButton.enabled = NO;
+            _previousButton.enabled = NO;
+
+            [self displayActivity:nextActivity];
+            
+            _currentCard.center = rightCenter;
+            
+            [UIView animateWithDuration:animationTime animations:^{
+                _currentCard.center = displayCenter;
+            }];
 			
 		} else {
 			
@@ -183,7 +191,6 @@ Activity *currentActivity;
 					
 					//The activity to be displayed
 					Activity *nextActivity = [_selectedActivities objectAtIndex:currentPos];
-                    NSLog(@"current %d", currentPos);
                     if (currentPos == 0){
                         _previousButton.enabled = NO;
                     } else {
@@ -208,7 +215,7 @@ Activity *currentActivity;
 		}
 		
 	} else {
-		UIAlertView *alert = [[UIAlertView new] initWithTitle:@"Nothing there!" message:@"There aren't any activities of both the level and domain chosen." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		UIAlertView *alert = [[UIAlertView new] initWithTitle:@"Nothing there!" message:@"There aren't any questions of both the level and domain chosen." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[alert show];
 	}
 }
@@ -235,9 +242,10 @@ Activity *currentActivity;
     if (currentPos <= 0){
         currentPos = 0;
         _previousButton.enabled = NO;
-        _nextButton.enabled = YES;
+        if (_selectedActivities.count == 1){
+            _nextButton.enabled = YES;
+        }
     }
-    NSLog(@"%d", currentPos);
 	[UIView animateWithDuration:animationTime animations:^{
 		_currentCard.center = rightCenter;
 	} completion:^(BOOL finished){

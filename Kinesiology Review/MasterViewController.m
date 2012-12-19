@@ -106,7 +106,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-	return YES;
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);;
 }
 
 - (void)insertNewObject:(id)sender
@@ -194,13 +194,13 @@ NSMutableArray *currentActivityLevels, *currentDomains;
             NSURL *tempPath = sourcePath;
             sourcePath = [NSURL URLWithString:URL];
             if ([self refreshActivities]) {
-                _selectInstructions.text = @"Activities refreshed!  Choose a level and domain:";
+                _selectInstructions.text = @"Questions refreshed, choose a level and domain:";
                 _detailViewController.description.text = @"To get started, choose both a level and and domain of study on the left.";
                 _detailViewController.activitiesList.text = @"";
                 NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
                 [prefs setObject:URL forKey:@"lastxml"];
             } else {
-                _selectInstructions.text = @"Activities couldn't be refreshed.";
+                _selectInstructions.text = @"Questions couldn't be refreshed";
                 sourcePath = tempPath;
             }
             
@@ -222,7 +222,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	if (activitiesLists == nil || domainTitles == nil) {
 		UIAlertView *alert = [[UIAlertView new] initWithTitle:@"Error" message:@"The XML file posted online couldn't be read." delegate:nil cancelButtonTitle:@"Try again" otherButtonTitles:nil];
 		[alert show];
-		_selectInstructions.text = @"Activities couldn't be loaded.";
+		_selectInstructions.text = @"Questions couldn't be loaded";
 	}
 	else {
 		_selectInstructions.text = @"Choose a level and domain:";
@@ -351,11 +351,11 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 //Called when refresh button is hit
 - (IBAction)refresh:(UIBarButtonItem *)sender {
 	if ([self refreshActivities]) {
-		_selectInstructions.text = @"Activities refreshed!  Choose a level and domain:";
+		_selectInstructions.text = @"Questions refreshed, choose a level and domain:";
         _detailViewController.description.text = @"To get started, choose both a level and and domain of study on the left.";
         _detailViewController.activitiesList.text = @"";
 	} else {
-		_selectInstructions.text = @"Activities couldn't be refreshed.";
+		_selectInstructions.text = @"Questions couldn't be refreshed";
 	}
 	 
 	_selectInstructions.hidden = NO;
