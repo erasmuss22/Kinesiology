@@ -243,8 +243,13 @@ Activity *currentActivity;
         currentPos = 0;
         _previousButton.enabled = NO;
         if (_selectedActivities.count == 1){
+            _nextButton.enabled = NO;
+        }
+        if (_selectedActivities.count > 1){
             _nextButton.enabled = YES;
         }
+    } else {
+        _nextButton.enabled = YES;
     }
 	[UIView animateWithDuration:animationTime animations:^{
 		_currentCard.center = rightCenter;

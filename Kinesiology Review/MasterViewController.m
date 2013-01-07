@@ -273,9 +273,25 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 		//If both options have been set, update selected activities list
 		if (level != -1 && domain != -1) {
 			_selectInstructions.hidden = YES;
-			_detailViewController.selectedActivities = [[activitiesLists objectAtIndex:level] objectAtIndex:domain];
-            _detailViewController.previousActivities = [NSMutableArray new];
+            if (sourcePath.absoluteString != @"http://research.cs.wisc.edu/wings/projects/quiztime/test.xml") {
+                
+                NSUInteger count = [[[activitiesLists objectAtIndex:level] objectAtIndex:domain] count];
+                for (NSUInteger i = 0; i < count; ++i) {
+                    // Select a random element between i and end of array to swap with.
+                    NSInteger nElements = count - i;
+                    NSInteger n = (arc4random() % nElements) + i;
+                    [[[activitiesLists objectAtIndex:level] objectAtIndex:domain] exchangeObjectAtIndex:i withObjectAtIndex:n];
+                }
+            }
             
+            if (_detailViewController.selectedActivities.count != 0){
+                NSArray *tempArr = [[activitiesLists objectAtIndex:level] objectAtIndex:domain];
+                [_detailViewController.selectedActivities addObjectsFromArray:tempArr];
+                _detailViewController.previousActivities = [NSMutableArray new];
+                currentPos = _detailViewController.selectedActivities.count - tempArr.count;
+            } else {
+                _detailViewController.selectedActivities = [[activitiesLists objectAtIndex:level] objectAtIndex:domain];
+            }
 			_detailViewController.selectedListTitle = [NSString stringWithFormat:@"Level %d — %@", level + 1, [domainTitles objectAtIndex:domain]];
 			[_detailViewController nextActivity:nil];
 			[_detailViewController.nextButton setEnabled:YES];
@@ -338,6 +354,8 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 	[_refreshingIndicator stopAnimating];
 	return NO;
 }
+
+
 
 //If both options have been chosen, update selected activities variable and list title
 - (void)setCurrentActivities

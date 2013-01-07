@@ -28,4 +28,5 @@
 
 - (BOOL)refreshActivities;
 
+
 @end
