@@ -190,18 +190,16 @@ Activity *currentActivity;
 				if (finished) {
 					
 					//The activity to be displayed
-					Activity *nextActivity = [_selectedActivities objectAtIndex:currentPos];
-                    if (currentPos == 0){
-                        _previousButton.enabled = NO;
-                    } else {
-                        _previousButton.enabled = YES;
-                    }
+                    _previousButton.enabled = YES;
                     currentPos++;
-                    if (currentPos == _selectedActivities.count){
-                        currentPos--;
+                    NSLog(@"detail currentPos %d", currentPos);
+                    if (currentPos == _selectedActivities.count - 1){
+                        //currentPos--;
                         _nextButton.enabled = NO;
                         _previousButton.enabled = YES;
                     }
+                    NSLog(@"detail currentPos %d", currentPos);
+                    Activity *nextActivity = [_selectedActivities objectAtIndex:currentPos];
 					[self displayActivity:nextActivity];
 					
 					_currentCard.center = rightCenter;

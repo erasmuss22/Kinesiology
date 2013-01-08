@@ -289,12 +289,16 @@ NSMutableArray *currentActivityLevels, *currentDomains;
                 [_detailViewController.selectedActivities addObjectsFromArray:tempArr];
                 _detailViewController.previousActivities = [NSMutableArray new];
                 currentPos = _detailViewController.selectedActivities.count - tempArr.count;
+                NSLog(@"currentPos %d", currentPos);
+                NSLog(@"tempArr %d", tempArr.count);
+                NSLog(@"selected %d", _detailViewController.selectedActivities.count);
             } else {
                 _detailViewController.selectedActivities = [[activitiesLists objectAtIndex:level] objectAtIndex:domain];
             }
 			_detailViewController.selectedListTitle = [NSString stringWithFormat:@"Level %d — %@", level + 1, [domainTitles objectAtIndex:domain]];
-			[_detailViewController nextActivity:nil];
-			[_detailViewController.nextButton setEnabled:YES];
+            NSLog(@"master currentPos %d", currentPos);
+			[_detailViewController displayActivity:[_detailViewController.selectedActivities objectAtIndex:currentPos]];
+			//[_detailViewController.nextButton setEnabled:YES];
             
 		}
 		[_detailViewController.previousButton setEnabled:NO];
