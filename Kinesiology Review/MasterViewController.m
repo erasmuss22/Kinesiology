@@ -301,7 +301,7 @@ NSMutableArray *currentActivityLevels, *currentDomains;
 			//[_detailViewController.nextButton setEnabled:YES];
             
 		}
-		[_detailViewController.previousButton setEnabled:NO];
+		//[_detailViewController.previousButton setEnabled:NO];
 		[tableView cellForRowAtIndexPath:indexPath].accessoryType = UITableViewCellAccessoryCheckmark;
 		
 		//And uncheck other options in the section

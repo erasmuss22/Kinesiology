@@ -190,14 +190,14 @@ Activity *currentActivity;
 				if (finished) {
 					
 					//The activity to be displayed
-                    _previousButton.enabled = YES;
+                    //_previousButton.enabled = YES;
                     currentPos++;
                     NSLog(@"detail currentPos %d", currentPos);
-                    if (currentPos == _selectedActivities.count - 1){
+                    /*if (currentPos == _selectedActivities.count - 1){
                         //currentPos--;
                         _nextButton.enabled = NO;
                         _previousButton.enabled = YES;
-                    }
+                    }*/
                     NSLog(@"detail currentPos %d", currentPos);
                     Activity *nextActivity = [_selectedActivities objectAtIndex:currentPos];
 					[self displayActivity:nextActivity];
@@ -227,6 +227,25 @@ Activity *currentActivity;
     _imageView.hidden = activity.imageURL == nil;
 
 	
+    if (currentPos == _selectedActivities.count - 1 && currentPos != 0){
+        //currentPos--;
+        _nextButton.enabled = NO;
+        _previousButton.enabled = YES;
+    }
+    
+    if (currentPos < _selectedActivities.count - 1 && currentPos != 0){
+        _nextButton.enabled = YES;
+        _previousButton.enabled = YES;
+    }
+    
+    if (currentPos <= 0){
+        currentPos = 0;
+        _previousButton.enabled = NO;
+        if (_selectedActivities.count > 1){
+            _nextButton.enabled = YES;
+        }
+    }
+    
 	currentActivity = activity;
     _answerButton.hidden = currentActivity.answer == nil;
     if (activity.imageURL != nil){
@@ -237,7 +256,7 @@ Activity *currentActivity;
 //Displays the previous activity when button is pressed
 - (IBAction)backToPrevious:(UIBarButtonItem *)sender {
     currentPos--;
-    if (currentPos <= 0){
+    /*if (currentPos <= 0){
         currentPos = 0;
         _previousButton.enabled = NO;
         if (_selectedActivities.count == 1){
@@ -248,7 +267,7 @@ Activity *currentActivity;
         }
     } else {
         _nextButton.enabled = YES;
-    }
+    }*/
 	[UIView animateWithDuration:animationTime animations:^{
 		_currentCard.center = rightCenter;
 	} completion:^(BOOL finished){
