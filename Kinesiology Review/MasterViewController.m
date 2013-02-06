@@ -179,7 +179,11 @@ NSMutableArray *currentActivityLevels, *currentDomains;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     UITextField *alertTextField = [alert textFieldAtIndex:0];
     alertTextField.keyboardType = UIKeyboardTypeURL;
-    alertTextField.placeholder = @"Insert URL address";
+    if (sourcePath != nil){
+        alertTextField.text = sourcePath.absoluteString;
+    } else {
+        alertTextField.placeholder = @"Insert URL address";
+    }
     NSString *URL = alertTextField.text;
     
     sourcePath = [NSURL URLWithString:URL];
